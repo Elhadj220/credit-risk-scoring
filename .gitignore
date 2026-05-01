@@ -1,0 +1,23 @@
+# Environnement
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Data — jamais versionner les données
+data/raw/
+data/processed/
+
+# Cache Python
+src/__pycache__/
+src/data/__pycache__/
+src/features/__pycache__/
+src/models/__pycache__/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
