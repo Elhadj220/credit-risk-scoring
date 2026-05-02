@@ -5,8 +5,8 @@ import numpy as np
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.apps import apps
-
 
 EXPECTED_FEATURES = [
     'LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE',
@@ -17,22 +17,17 @@ EXPECTED_FEATURES = [
 
 
 class PredictView(APIView):
-    """
-    POST /api/predict/
-    Reçoit les features d'un client et retourne son score de risque.
-    """
+    permission_classes = [IsAuthenticated]  # ← JWT requis
 
     def post(self, request):
         config = apps.get_app_config('predictor')
 
-        # Vérification que le modèle est chargé
         if config.model is None:
             return Response(
                 {'error': 'Modèle non chargé'},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE
             )
 
-        # Validation des features
         data = request.data
         missing = [f for f in EXPECTED_FEATURES if f not in data]
         if missing:
@@ -41,7 +36,6 @@ class PredictView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Préparation des données
         try:
             features = np.array([[data[f] for f in EXPECTED_FEATURES]])
             features_scaled = config.scaler.transform(features)
@@ -51,21 +45,21 @@ class PredictView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Prédiction
-        risk_score  = config.model.predict_proba(features_scaled)[0][1]
-        prediction  = 'défaut' if risk_score >= config.threshold else 'sain'
+        risk_score = config.model.predict_proba(features_scaled)[0][1]
+        prediction = 'défaut' if risk_score >= config.threshold else 'sain'
 
         return Response({
             'risk_score': round(float(risk_score), 4),
             'prediction': prediction,
             'threshold':  config.threshold,
             'risk_level': 'élevé' if risk_score > 0.6 else
-                         'moyen' if risk_score > 0.3 else 'faible'
+                         'moyen' if risk_score > 0.3 else 'faible',
+            'requested_by': request.user.username  # ← log utilisateur
         })
 
 
 class HealthView(APIView):
-    """GET /api/health/ — vérifie que l'API est opérationnelle."""
+    permission_classes = [AllowAny]  # ← health check public
 
     def get(self, request):
         config = apps.get_app_config('predictor')
