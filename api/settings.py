@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',  # ← ajoute
+    'drf_spectacular',  # ← ajoute
     'predictor',       # ← ajoute
 ]
 
@@ -118,6 +119,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Credit Risk Scoring API',
+    'DESCRIPTION': 'API de scoring de risque crédit basée sur un modèle ML Random Forest. ROC-AUC: 0.77',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
 # Django REST Framework config
 # JWT Authentication
 REST_FRAMEWORK = {
@@ -138,9 +146,10 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.AnonRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'user': '100/hour',   # 100 requêtes/heure par utilisateur
-        'anon': '10/hour',    # 10 requêtes/heure anonyme
-    }
+        'user': '100/hour',
+        'anon': '10/hour',
+    },
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',  # ← ici, pas dans THROTTLE_RATES
 }
 
 from datetime import timedelta
