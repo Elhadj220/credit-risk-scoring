@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',  # ← ajoute
     'drf_spectacular',  # ← ajoute
     'predictor',       # ← ajoute
+    'corsheaders',
 ]
-
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # ← en premier obligatoire
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +52,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Vite dev server
+]
+
 
 ROOT_URLCONF = 'api.urls'
 
