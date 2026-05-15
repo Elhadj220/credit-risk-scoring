@@ -164,3 +164,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+import os
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-!qbrv*86lgl#+5swy)4%5-r$uq$ly4ro7gj62s#tmsm5m+-stg')
+ALLOWED_HOSTS = ['*']
