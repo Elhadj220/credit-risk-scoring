@@ -55,7 +55,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://credit-risk-scoring-frontend.onrender.com",  # ← on ajoutera l'URL exacte après
+    "https://credit-risk-frontend-i78l.onrender.com",
 ]
 
 
