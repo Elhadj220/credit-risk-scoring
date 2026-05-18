@@ -5,9 +5,8 @@ __pycache__/
 *.pyo
 .env
 
-# Data — jamais versionner les données
+# Data brutes uniquement — pas les modèles
 data/raw/
-data/processed/
 
 # Cache Python
 src/__pycache__/

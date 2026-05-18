@@ -31,3 +31,12 @@ credit-risk-scoring/
 │ ├── features/ # Feature engineering
 │ └── models/ # Entraînement et évaluation
 └── tests/ # Tests unitaires
+
+## Ce que tu peux dire à un recruteur
+
+"J'ai un projet Credit Risk Scoring déployé en production — une API Django REST avec authentification JWT, un modèle Random Forest ROC-AUC 0.77, et un frontend React. Tout est accessible en ligne."
+
+Deux URLs à mettre sur ton CV et LinkedIn :
+
+API : https://credit-risk-scoring-d8h6.onrender.com/api/docs/
+App : https://credit-risk-frontend-i78l.onrender.com
