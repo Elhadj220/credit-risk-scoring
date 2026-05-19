@@ -1,42 +1,117 @@
-# Credit Risk Scoring 🏦
+# 🏦 Credit Risk Scoring
 
-Modèle de machine learning pour prédire le risque de défaut de paiement
-d'un client bancaire (classification binaire).
+> Système de scoring de risque crédit basé sur le Machine Learning — déployé en production
 
-## Problème métier
+[![Live Demo](https://img.shields.io/badge/Demo-Live-green)](https://credit-risk-frontend-i78l.onrender.com)
+[![API Docs](https://img.shields.io/badge/API-Docs-blue)](https://credit-risk-scoring-d8h6.onrender.com/api/docs/)
+[![GitHub](https://img.shields.io/badge/GitHub-Elhadj220-black)](https://github.com/Elhadj220)
 
-Prédire si un client va faire défaut sur son paiement le mois suivant,
-à partir de son historique de crédit et de paiements.
+---
 
-## Dataset
+## 🎯 Problème métier
 
-- Source : UCI Machine Learning Repository
-- 30 000 clients, 23 features
-- Target : `default payment next month` (0 = pas de défaut, 1 = défaut)
+Prédire si un client bancaire va faire **défaut sur son paiement** le mois suivant,
+à partir de son historique de crédit — pour aider les banques à mieux gérer le risque.
 
-## Stack technique
+---
 
-- Python 3.13
-- pandas, scikit-learn, matplotlib, seaborn
-- pytest pour les tests
+## 🚀 Demo en production
 
-## Structure du projet
+| Service               | URL                                                     |
+| --------------------- | ------------------------------------------------------- |
+| **Application Web**   | https://credit-risk-frontend-i78l.onrender.com          |
+| **API Documentation** | https://credit-risk-scoring-d8h6.onrender.com/api/docs/ |
+
+---
+
+## 📊 Résultats ML
+
+| Métrique         | Baseline | Random Forest |
+| ---------------- | -------- | ------------- |
+| ROC-AUC          | 0.495    | **0.775**     |
+| Recall défaut    | 0.21     | **0.55**      |
+| Precision défaut | 0.21     | **0.51**      |
+
+**Optimisation du seuil de décision** — F2-score → Recall passe de 0.55 à **0.73**
+→ 378 mauvais payeurs supplémentaires détectés
+
+---
+
+## 🛠️ Stack technique
+
+**Machine Learning**
+
+- Python, pandas, scikit-learn
+- Random Forest avec class_weight="balanced"
+- Feature Engineering : agrégation BILL_AMT, PAY_RATIO
+
+**Backend**
+
+- Django 6 + Django REST Framework
+- JWT Authentication (SimpleJWT)
+- Rate limiting, Swagger/OpenAPI docs
+
+**Frontend**
+
+- React 19 + Vite
+- Tailwind CSS
+- Axios + React Router
+
+**DevOps**
+
+- Docker + docker-compose
+- Déploiement cloud : Render
+- CI/CD automatique via GitHub
+
+---
+
+## 📁 Structure du projet
 
 credit-risk-scoring/
-├── configs/ # Configuration centralisée (YAML)
-├── data/ # Données brutes et traitées (non versionnées)
-├── notebooks/ # Exploration et EDA
 ├── src/
-│ ├── data/ # Chargement et validation des données
+│ ├── data/ # Chargement et validation
 │ ├── features/ # Feature engineering
 │ └── models/ # Entraînement et évaluation
-└── tests/ # Tests unitaires
+├── api/ # Configuration Django
+├── predictor/ # App Django REST
+├── frontend/ # React app
+├── notebooks/ # EDA et analyse
+├── tests/ # Tests unitaires
+└── configs/ # Configuration YAML
 
-## Ce que tu peux dire à un recruteur
+---
 
-"J'ai un projet Credit Risk Scoring déployé en production — une API Django REST avec authentification JWT, un modèle Random Forest ROC-AUC 0.77, et un frontend React. Tout est accessible en ligne."
+## ⚙️ Installation locale
 
-Deux URLs à mettre sur ton CV et LinkedIn :
+```bash
+# Backend
+git clone https://github.com/Elhadj220/credit-risk-scoring
+cd credit-risk-scoring
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py runserver
 
-API : https://credit-risk-scoring-d8h6.onrender.com/api/docs/
-App : https://credit-risk-frontend-i78l.onrender.com
+# Frontend
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 📈 Dataset
+
+- **Source** : UCI Machine Learning Repository
+- **Taille** : 30 000 clients, 24 features
+- **Target** : défaut de paiement (binaire)
+- **Déséquilibre** : 78% / 22% → géré avec class_weight
+
+---
+
+## 👤 Auteur
+
+**Aladji Yero Gano**
+
+- LinkedIn : [linkedin.com/in/Leuz](https://linkedin.com/in/)
+- GitHub : [github.com/Elhadj220](https://github.com/Elhadj220)
